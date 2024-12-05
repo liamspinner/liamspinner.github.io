@@ -1,0 +1,61 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+/************************
+ *  Cop3223C Fall 2024  *
+ *  Week 7 Lab B        *
+ *  William Spinner     *
+ *  wi642825@ucf.edu    *
+ *  3 Oct 2024          *
+ ************************/
+
+// determine if the given number is a perfect number
+
+// to use "pass" like in python
+#define pass (void)0
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+// for boolean if necessary
+#include <stdbool.h>
+
+// where max is equal to the total range of all numbers tested
+int isPerfect(int num, int max, int factors[]) {
+    int sum = 0;
+    int index = 0;
+    // didnt need factors list but i thought it couldve been useful
+    // int factors[max];
+    // checking if factor up to half of num because anything over half will have appeared already before
+    for (int i =1; i <= num/2; i++){
+        // if its a factor then do the following
+        if (num % i == 0){
+            sum += i;
+            index++;
+            factors[index] = i;
+        }
+    }
+    // if sum = num its true
+    // decided to do 1 and 0 instead of bools
+    if (num == sum){
+        return 1;
+    }
+    else return 0;
+}
+
+int main() {
+    int max = 1000;
+    puts("");
+    // for num in range max
+    for (int i = 0; 1 <= max; i++){
+        // visit the number
+        int factors[max];
+        int perfect = isPerfect(i, max, factors);
+        // if number is perfect then report it
+        // could also add to an int sum and initialize an appropriately sized arr but that would require revisiting each num in the range to add it to the arr
+        // this is simpler for the purpose of this assignment
+        if (perfect == 1){
+            printf("%d is perfect\n", i);
+            for (int i = 0; i < perfect; i++){
+                printf("%d ", factors[i]);
+            }
+        }
+    }
+    puts("");
+}

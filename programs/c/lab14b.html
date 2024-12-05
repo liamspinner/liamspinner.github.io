@@ -1,0 +1,60 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+/************************
+ *  Cop3223C Fall 2024  *
+ *  Week 14 Lab B       *
+ *  William Spinner     *
+ *  wi642825@ucf.edu    *
+ *  22 Nov 2024         *
+ ************************/
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+void printBinary(unsigned int num);
+unsigned int power2(unsigned int number, unsigned int pow);
+
+void main() {
+    unsigned int number, pow;
+
+    // prompt
+    printf("enter unsigned int: ");
+    scanf("%u", &number);
+    
+    printf("enter power: ");
+    scanf("%u", &pow);
+
+    // overflow warning
+    if (pow > 31) {
+        printf("power exceeds 31 - overflow possible\n");
+    }
+
+    // power
+    power2(number, pow);
+
+    return;
+}
+
+
+
+// print num in binary
+void printBinary(unsigned int num) {
+    for (int i = 31; i >= 0; i--) {
+        printf("%d", (num >> i) & 1);
+    }
+    printf("\n");
+}
+
+// calculate nth power by shifting n times
+unsigned int power2(unsigned int number, unsigned int pow) {
+    unsigned int result = number << pow;
+
+    // print num then binary
+    printf("number: %u  --> Binary:  ", number);
+    printBinary(number);
+    // indicate power
+    printf("Power: %u\n", pow);
+    // print new num and binary
+    printf("Result: %u  --> Binary: ", result);
+    printBinary(result);
+
+    return result;
+}

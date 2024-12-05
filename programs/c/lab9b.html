@@ -1,0 +1,36 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+/************************
+ *  Cop3223C Fall 2024  *
+ *  Week 9 Lab B        *
+ *  William Spinner     *
+ *  wi642825@ucf.edu    *
+ *  18 Oct 2024         *
+ ************************/
+
+// towers of hanoi
+
+#define pass (void)0 // to use "pass" like in python
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+void hanoi(int n, int t1, int t2, int t3) {
+    // base case for the last disk
+    if (n == 1) {
+        printf("%d -> %d\n", t1, t3);
+    }
+    // similar process in-order traversal for BST
+    else {
+        // move next item to temp if n > 1
+        hanoi(n-1, t1, t3, t2);
+        // move from start to final
+        printf("%d -> %d\n", t1, t3);
+        // move next item from temp to final if n > 1
+        hanoi(n-1, t2, t1, t3); 
+    }
+
+}
+
+int main() {
+    hanoi(3, 1, 2, 3);
+    return 0;
+}

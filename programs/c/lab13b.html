@@ -1,0 +1,48 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+/************************
+ *  Cop3223C Fall 2024  *
+ *  Week 13 Lab B       *
+ *  William Spinner     *
+ *  wi642825@ucf.edu    *
+ *  15 Nov 2024         *
+ ************************/
+
+// parse a phone number into segments as integers
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void main() {
+    char phone[20]; // string for original input
+    char area[4], midThree[4], lastFour[5], concatenated[8];
+    // take phone num:
+    printf("Enter a phone number in the format (555) 555-5555: ");
+    scanf("%s", phone); // read string to variable phone
+    // create char pointer for tokenized chars
+    char *token; 
+    
+    // remove "()" from area code with strtok
+    token = strtok(phone, "()");
+    strcpy(area, token); 
+    
+    // remove - from middke three nums
+    token = strtok(NULL, "-");
+    strcpy(midThree, token);
+    
+    // remove - out of last 4 digits
+    token = strtok(NULL, "-"); 
+    strcpy(lastFour, token);
+    
+    // concatenate middle three with last four digits
+    snprintf(concatenated, sizeof(concatenated), "%s%s", midThree, lastFour);
+    // convert strings to integers with atoi(int) 
+    int areaInt = atoi(area); 
+    int phoneInt = atoi(concatenated);
+
+    // print numbers
+    printf("Area Code: %d\n", areaInt);
+    printf("Phone Number (7 digits): %d\n", phoneInt);
+
+    return;
+}

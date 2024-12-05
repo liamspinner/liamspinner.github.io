@@ -1,0 +1,42 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+/************************
+ *  Cop3223C Fall 2024  *
+ *  Week 10 Lab B       *
+ *  William Spinner     *
+ *  wi642825@ucf.edu    *
+ *  25 Oct 2024         *
+ ************************/
+
+// identify non repeats in array of 20 ints
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int main() {
+    // the list of numbers that will be used, if the method works correctly, the numbers should be displayed incrementing by one
+    int nums[20] = {11, 12, 12, 13, 14, 15, 15, 16, 17, 18, 19, 11, 19, 20, 21, 22, 23, 24, 25, 26};
+    int unique[20]; // tracking visited numbers
+    int uniqueCount = 0; // counting quantity of nums visited
+    int duplicate; // if the current number is a duplicate
+
+    for (int i = 0; i < 20; i++) {
+        int current = nums[i];
+
+        // reset bool duplicate in case it was true'd from the last number
+        duplicate = 0;
+        for (int j = 0; j < uniqueCount; j++) {
+            if (unique[j] == current) {
+                duplicate = 1;
+                break;
+            }
+        }
+
+        // if no dupes then add to tracking array and print
+        if (!duplicate) {
+            unique[uniqueCount] = current;
+            uniqueCount++;
+            printf("%d\n", current); 
+        }
+    }
+
+    return 0;
+}

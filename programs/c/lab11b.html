@@ -1,0 +1,100 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+/************************
+ *  Cop3223C Fall 2024  *
+ *  Week 11 Lab B       *
+ *  William Spinner     *
+ *  wi642825@ucf.edu    *
+ *  1 Nov 2024          *
+ ************************/
+
+// make and solve random maze
+// this problem is similar to the percolation problem
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define SIZE 12
+
+// function to display maze
+void displayMaze(char maze[SIZE][SIZE]) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            printf("%c ", maze[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+// recursive function to solve 2d maze array 
+int mazeTraverse(char maze[SIZE][SIZE], int x, int y, int exitX, int exitY) {
+    // base case if exit is reached
+    if (x == exitX && y == exitY) {
+        maze[x][y] = 'X';
+        displayMaze(maze);
+        return 1; // maze is solved
+    }
+
+    // prevent any invalid moves
+    if (x < 0 || x >= SIZE || y < 0 || y >= SIZE || maze[x][y] == '#' || maze[x][y] == 'X')
+        return 0;
+
+    // visit current cell
+    maze[x][y] = 'X';
+
+    // recursive step: check each neighboring space
+    if (mazeTraverse(maze, x, y + 1, exitX, exitY)) return 1; // right
+    if (mazeTraverse(maze, x + 1, y, exitX, exitY)) return 1; // down
+    if (mazeTraverse(maze, x, y - 1, exitX, exitY)) return 1; // left
+    if (mazeTraverse(maze, x - 1, y, exitX, exitY)) return 1; // up
+
+    // deselect path if dead end
+    maze[x][y] = '.';
+    //displayMaze(maze);
+    return 0;
+}
+
+// function for random square maze
+// must use pointers in args because the start, end, (and walls too) are random
+void mazeGenerator(char maze[SIZE][SIZE], int *startX, int *startY, int *exitX, int *exitY) {
+    srand(time(NULL));
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (rand() % 3 == 0) { // 33% chance of wall
+                maze[i][j] = '#';
+            }
+            else {
+                maze[i][j] = '.';
+            }
+        }
+    }
+
+    // put random start and end along maze edges
+    *startX = 0; *startY = rand() % SIZE; // Start on top edge
+    *exitX = SIZE - 1; *exitY = rand() % SIZE; // Exit on bottom edge
+    maze[*startX][*startY] = 'S';
+    maze[*exitX][*exitY] = 'E';
+}
+
+int main() {
+    char maze[SIZE][SIZE];
+    int startX, startY, exitX, exitY;
+
+    // generate random maze
+    mazeGenerator(maze, &startX, &startY, &exitX, &exitY);
+
+    // show unattempted maze
+    printf("generated maze:\n");
+    displayMaze(maze);
+
+    printf("\nsolved maze:\n");
+
+    if (mazeTraverse(maze, startX, startY, exitX, exitY)) {
+        // nothing to say, maze is solved
+    } else {
+        printf("no solution\n");
+    }
+
+    return 0;
+}
