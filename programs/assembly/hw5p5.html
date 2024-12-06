@@ -1,0 +1,48 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+ORG 0
+main:
+    MOV TMOD, #01H     ; Set up timer 0 as 16-bit timer
+    MOV TH0, #0FCH     ; Load Timer 0 high byte for 200us delay (12MHz clock)
+    MOV TL0, #0D3H     ; Load Timer 0 low byte for 200us delay (12MHz clock)
+    SETB TR0           ; Start Timer 0
+
+    MOV P1, #000000b   ; Initialize P1 with SVM1
+    MOV R0, #000000b   ; Initialize R0 with SVM1
+    MOV R1, #010000b   ; Initialize R1 with SVM2
+    MOV R2, #011000b   ; Initialize R2 with SVM3
+    MOV R3, #011100b   ; Initialize R3 with SVM4
+    MOV R4, #000000b   ; Initialize R4 with SVM1
+    MOV R5, #010000b   ; Initialize R5 with SVM2
+
+loop:
+    MOV P1, R0         ; Move R0 into port 1
+    CALL delay         ; Delay
+    CLR P1             ; Clear port 1
+    CALL delay         ; Delay
+    MOV P1, R1         ; Move R1 into port 1
+    CALL delay         ; Delay
+    CLR P1             ; Clear port 1
+    CALL delay         ; Delay
+    MOV P1, R2         ; Move R2 into port 1
+    CALL delay         ; Delay
+    CLR P1             ; Clear port 1
+    CALL delay         ; Delay
+    MOV P1, R3         ; Move R3 into port 1
+    CALL delay         ; Delay
+    CLR P1             ; Clear port 1
+    CALL delay         ; Delay
+    MOV P1, R4         ; Move R4 into port 1
+    CALL delay         ; Delay
+    CLR P1             ; Clear port 1
+    CALL delay         ; Delay
+    MOV P1, R5         ; Move R5 into port 1
+    CALL delay         ; Delay
+    CLR P1             ; Clear port 1
+    CALL delay         ; Delay
+    SJMP loop          ; Repeat loop
+
+delay:
+    MOV R7, #100       ; Set delay count to 100 (100us delay)
+delay_loop:
+    DJNZ R7, delay_loop ; Decrement R7 and repeat loop if not zero
+    RET                ; Return from subroutine
