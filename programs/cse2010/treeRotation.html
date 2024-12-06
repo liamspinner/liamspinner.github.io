@@ -1,0 +1,109 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+from treeTraversal import *
+
+# inherited the tree class so no need to rewrite that
+
+class Rotation: 
+    def leftRotate(root):
+        temp = root.right #first make temp = what the new root will be
+        newroot = root.right
+        root.right = temp.left #then make the root.right point to new root's left
+        temp.left = root # new root's left points to old root
+        root = newroot
+        return root
+    # the right rotation is the inverse L & R of the left rotation
+    def rightRotate(root):
+        temp = root.left
+        newroot = root.left
+        root.left = temp.right
+        temp.right = root
+        root = newroot
+        return root
+
+    def doubleLeft(root):
+        newroot1 = Rotation.leftRotate(root)
+        newroot2 = Rotation.leftRotate(newroot1)#root)#newroot1)
+        return newroot2
+        return newroot2
+    
+        #### The code below performed worse than my original solution above
+        # s = root # var names inspired by on openDSA figure 26.2.3: https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/AVL.html
+        # x = root.left 
+        # y = root.left.right
+
+        # x.right = y.left
+        # s.right = y.right
+
+        # y.left = x
+        # y.right = s
+        # return s
+        pass
+    def doubleRight(root):
+        newroot1 = Rotation.rightRotate(root)
+        newroot2 = Rotation.rightRotate(newroot1)
+        pass
+    pass
+
+
+startTree = Tree(10)
+startTree.left = Tree(9)
+startTree.right = Tree(8)
+startTree.left.left = Tree(7)
+startTree.left.right = Tree(6)
+startTree.right.left = Tree(5)
+startTree.right.right = Tree(4)
+
+print("Initial Level-Order Traversal:")
+levelorder = Traversal.levelOrder(startTree)
+
+# leftRotate = node2
+# rightRotate = node2
+# twoLeft = node2
+# twoRight = node2
+# NOTE: when rotating, the returned node must be used, as the original named node is not the root anymore
+print("Left Rotation:")
+leftR = Tree(10)
+leftR.left = Tree(9)
+leftR.right = Tree(8)
+leftR.left.left = Tree(7)
+leftR.left.right = Tree(6)
+leftR.right.left = Tree(5)
+leftR.right.right = Tree(4)
+leftTree = Rotation.leftRotate(leftR)
+Traversal.levelOrder(leftTree)
+
+print("Right Rotation:")
+rightR = Tree(10)
+rightR.left = Tree(9)
+rightR.right = Tree(8)
+rightR.left.left = Tree(7)
+rightR.left.right = Tree(6)
+rightR.right.left = Tree(5)
+rightR.right.right = Tree(4)
+rightTree = Rotation.rightRotate(rightR)
+Traversal.levelOrder(rightTree)
+
+print("Double Left Rotation")
+twoL = Tree(10)
+twoL.left = Tree(9)
+twoL.right = Tree(8)
+twoL.left.left = Tree(7)
+twoL.left.right = Tree(6)
+twoL.right.left = Tree(5)
+twoL.right.right = Tree(4)
+twoLeft = Rotation.doubleLeft(twoL)
+Traversal.levelOrder(twoL)
+
+print("Double Right Rotation")
+twoR = Tree(10)
+twoR.left = Tree(9)
+twoR.right = Tree(8)
+twoR.left.left = Tree(7)
+twoR.left.right = Tree(6)
+twoR.right.left = Tree(5)
+twoR.right.right = Tree(4)
+twoLeft = Rotation.doubleRight(twoR)
+Traversal.levelOrder(twoR)
+
+# Rotation.rightRotate(node3)
+# Traversal.levelOrder(node3)

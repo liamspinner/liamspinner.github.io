@@ -1,0 +1,84 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+class Node:
+    def __init__(self, initdata):
+        self.data = initdata
+        self.next = None
+
+
+class LinkedList:  # This is your existing linked list class
+    def __init__(self):
+        self.head = None
+
+    # other linked list methods (printList, insertAtHead, insertAtTail, etc.)
+
+    def printList(self):
+        current = self.head
+        while current != None:
+            print(current.data, ' ')
+            current = current.next
+    
+    def addHead(self, data):
+        newHead = Node(data)
+        newHead.next = self.head
+        self.head = newHead
+
+    def addTail(self, data):
+        newTail = Node(data)
+        if self.head == None:
+            self.head = newTail
+            return
+        tail = self.head
+        while (tail.next):
+            tail = tail.next
+        tail.next = newTail
+    
+    def findNode(self, target):
+        i = 0
+        currentNode = self.head
+        while currentNode != None:
+            if currentNode.data == target:
+                print('Node containing', target, 'has been found at index:', i)
+                return currentNode
+            i += 1
+            currentNode = currentNode.next
+        print("Node not found")
+        return None
+    
+    def insertAfter(self, previous, data):
+        if previous == None: return
+        i = 0
+        currentNode = self.head
+        while i != previous:
+            currentNode.next
+            i += 1
+        previous = currentNode.next 
+        newNode = Node(data)
+        newNode.next = previous.next
+        previous.next = newNode
+
+    def deleteAfter(self, target):
+        if self.head == None: return 
+        i = -1
+        currentNode = self.head
+        while currentNode.next and i < target:
+            prevNode = currentNode
+            currentNode = currentNode.next
+            i += 1
+        if i == 0: 
+            self.head = self.head.next
+        else:
+            prevNode.next = currentNode.next
+        
+    def deleteHead(self):
+        #needed modification here
+        temp = self.head
+        if self.head:
+            self.head = self.head.next
+        # and here... otherwise it wont be assigned to
+        return temp
+
+    # needed to create a new method isEmpty 
+    def isEmpty(self):
+        if self is None:
+            return True
+        else: return False

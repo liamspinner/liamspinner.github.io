@@ -1,0 +1,18 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+from LinkedList import *
+
+class Queue(LinkedList): # queues use FIFO inventory
+    def enqueue(self, item):
+        # Implement using insertAtTail from LinkedList
+        return LinkedList.addTail(self, item)
+
+    def dequeue(self):
+        # Implement using deleteAtHead from LinkedList
+        return LinkedList.deleteHead(self)
+
+    def peek(self):
+        # Return head node's data (if not empty)
+        if self.isEmpty():
+            return None
+        else:
+            return self.head.data

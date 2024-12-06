@@ -1,0 +1,101 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+# inheriting all from queue for simplicity; we will need printList later
+from Queue import *
+
+class Tree:
+    def __init__(self, initdata):
+        self.data = initdata
+        self.left = None
+        self.right = None
+    
+    # i dont think a 'newNode' method is necessary the way is it in the C code
+# now for the different order methods:
+class Traversal:
+    # the example algorithms use 'visit' to describe the action we are taking
+    # in this case, visit should be replaced with 'enqueue'
+    def preOrder(node):
+        order = Queue()
+        if node != None:
+             order.enqueue(node.data) # had to be node.data, not just the node or else will get memory addresses again
+             order.printList()
+             Traversal.preOrder(node.left)
+             Traversal.preOrder(node.right)
+             return order
+        else:
+            return None
+    # now that pre-order is done, the next 2 are just rearranging pre order
+    def inOrder(node):
+        order = Queue()
+        if node != None:
+             order.enqueue(node.data) 
+             Traversal.inOrder(node.left)
+             order.printList()
+             Traversal.inOrder(node.right)
+             return order
+        else:
+            return None
+    def postOrder(node):
+        order = Queue()
+        if node != None:
+             order.enqueue(node.data)
+             Traversal.postOrder(node.left)
+             Traversal.postOrder(node.right)
+             order.printList()
+             return order
+        else:
+            return None
+    
+    
+    def levelOrder(root):
+        q = Queue()
+        q.enqueue(root)
+
+        if root == None:
+            return
+
+        #print(q.isEmpty())
+        i = 0
+        #print(type(q.head.data))
+        # had to use this instead of is isEmpty function... something is wrong w it
+        while q.head != None:
+            # print(q.head.data)
+            # print(q.head.data)
+            node = q.dequeue().data
+            
+            # if node == None:
+            #     continue
+            
+            # visit node here:
+            #q.enqueue(node) # v said not needed 
+            print(node.data)
+            # for some reason node.left and node.right cause error... 'has no attribute' #### Sunjina
+            # print(node.data)
+            if node.left != None:
+                q.enqueue(node.left)
+            if node.right != None:
+                q.enqueue(node.right)
+        return q
+        pass
+
+
+# This will be the binary tree we will use to test the traversal functions:
+# node2 = Node2(10)
+# node2.left = Node2(9)
+# node2.right = Node2(8)
+# node2.left.left = Node2(7)
+# node2.left.right = Node2(6)
+# node2.right.left = Node2(5)
+# node2.right.right = Node2(4)
+
+# # NOTE: if we want to return the queue without printing, the methods themself must be modified.
+# print("Pre-Order Traversal:")
+# Traversal.preOrder(node2)
+
+# print("In-Order Traversal:")
+# Traversal.inOrder(node2)
+
+# print("Post-Order Traversal:")
+# Traversal.postOrder(node2)
+
+# print("Level-Order Traversal:")
+# Traversal.levelOrder(node2)

@@ -1,0 +1,58 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+# Python program for implementation of Insertion Sort
+ 
+# Function to do insertion sort
+def insertionSort(arr):
+  # TODO
+  # the first difference between the png and code is the "j=2"... 
+  # keeping it as 2 made the program not run to completion
+  for j in range (0, len(arr)):
+    key = arr[j]
+    i = j-1
+    # The second difference between the instructions in the png is the >=
+    #print(" ",j,": [")
+    while i >= 0 and arr[i] > key:
+      arr[i+1] = arr[i]
+      i -= 1
+      
+      #print('*', arr[i], '*')
+    arr[i+1] = key
+
+    # print(" ",j,": ",arr)
+    # print("       ",key)
+    
+    #for b in range (0, len(arr)):
+    line = []
+    if key != arr[i]: #arr[b] then arr[i]
+      selected = "*"+ str(key)+"*" #str(arr[i])
+      line.append(selected)
+    else: 
+      selected = "*"+ str(key)+"*" #str(arr[i])
+      line.append(key)
+    print(line)
+      
+    # print(" ",j,": ",line)
+    #print(line)
+        
+
+
+
+  return arr
+ 
+ 
+# Driver code to test above
+arr1 = [12, 11, 13, 5, 6]
+print("1 unsorted: ", arr1)
+print("1 sorted: ", insertionSort(arr1))
+
+arr2 = [18, 14, -10, 2, 3]
+print("2 unsorted: ", arr2)
+print("2 sorted: ", insertionSort(arr2))
+
+arr3 = [6, 2, 5, 2, 8.2]
+print("3 unsorted: ", arr3)
+print("3 sorted: ", insertionSort(arr3))
+
+arr4 = [5, 2, 4, 6, 1, 3]
+print("4 unsorted: ", arr4)
+print("4 sorted: ", insertionSort(arr4))

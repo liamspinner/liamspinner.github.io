@@ -1,0 +1,186 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+# Functions to be implemented:
+# Done  1. Add node to head e.g. 'add2head(12)'
+# Done  2. Add node to tail e.g. 'add2tail(33)'
+# Done  3. Find node containing a given val e.g. findNode(5) & return node loc
+# Done  4. Insert node after a node containing a given val
+# Done  5. Delete node after a node containing a given val
+# Done  6. Delete a node at the head
+# Done  7. Given two lists, L1 & L2, merge L1 & L2 so that the elements of L2 will be intercalated w the elements of L1
+
+
+
+
+class Node:
+    def __init__(self,initdata):
+        self.data = initdata
+        self.next = None
+
+
+class MyList:
+
+    def __init__(self):
+        self.head = None
+
+
+    def printList(self):
+        current = self.head
+        while current != None:
+            print(current.data, ' ')
+            current = current.next
+    
+    def addHead(self, data):
+        # code identical to the original "add node to head" given to us, just not hardcoded
+        newHead = Node(data)
+        newHead.next = self.head
+        self.head = newHead
+        #return False
+
+    def addTail(self, data): 
+        newTail = Node(data)
+        # checking if LL is empty
+        if self.head == None:
+            # if empty then create a head node
+            self.head = newTail
+            return # function is done
+        tail = self.head
+        # while not at the last node, move to the next node
+        while (tail.next):
+            tail = tail.next
+        # now add new tail
+        tail.next = newTail
+    
+    def findNode(self, target):
+        i = 0
+        currentNode = self.head
+        while currentNode != None:
+            if currentNode.data == target:
+                print('Node containing', target, 'has been found at index:', i)
+                return currentNode
+            # basically the same as i++ing a for-loop to get current index
+            i += 1
+            currentNode = currentNode.next
+        # while loop ended w/o finding node so indicating not found
+        print("Node not found")
+        return None
+    
+    def insertAfter(self, previous, data):
+        # where previous is the actual value of the node and data is the value in the new node after
+        # insert a node after a node containing a given value
+        if previous == None: return
+        # create a new node
+        #previous = self.head
+        i = 0
+        currentNode = self.head
+        while i != previous:
+            currentNode.next
+            i += 1
+        previous = currentNode.next  # previous = self.head
+        newNode = Node(data)
+        # make previous node point to new node
+        newNode.next = previous.next # newNode.next = previous.next
+        # make new node point to n+1 node
+        previous.next = newNode # previous.next = newNode
+        # previous.next = currentNode # <--- ts makes it repeat the head indefinitely dont do ts 
+
+    def deleteAfter(self, target):
+        # if the head is empty then cancel function
+        if self.head == None: return 
+        # to delete the Node AFTER the target, i must begin @ -1 instead of 0
+        i = -1
+        currentNode = self.head
+        # while there is a next node && i hasnt reached target
+        while currentNode.next and i < target:
+            prevNode = currentNode
+            currentNode = currentNode.next
+            i += 1
+        # target has been found
+        if i == 0: 
+            # if the target is the head, then just move the head to the next
+            self.head = self.head.next
+        else:
+            # otherwise jump from the last next to the node after the current node,a skipping the node
+            prevNode.next = currentNode.next
+        
+    def deleteHead(self):
+        # if there is a head, make it point to the next node's head instead
+        # technically this may cause garbage issues (??)
+        if self.head:
+            self.head = self.head.next
+        
+    def intercalate(list1, list2):
+        L1 = list1.head
+        L2 = list2.head
+        # as long as there are values in the nodes do the following
+        while L1 and L2:
+            L1Next = L1.next
+            L2Next = L2.next
+            # connect L1 to l2
+            L1.next = L2
+            # connect L2 to L1next    
+            L2.next = L1Next
+            L1 = L1Next
+            L2 = L2Next
+        if L2:
+            # if list2 has reamining elements then add them to L1
+            L1.next = L2
+        # list2 is empty
+        list2.head = None 
+
+myList = MyList()
+
+# Add node to head
+# temp = Node(31)
+# temp.next = myList.head
+# myList.head = temp
+
+# adding tail first to see behavior when empty LL
+print("adding tail first to see behavior when empty LL: addTail(9)")
+myList.addTail(9)
+myList.addHead(31)
+myList.addHead(17)
+myList.addHead(93)
+myList.addHead(26)
+
+# Print list 
+myList.printList()
+
+print("Modified list: new head 19 & new tail 44")
+myList.addHead(19)
+myList.addTail(44)
+myList.printList()
+print("Finding a specified node and returning memory address:")
+print(myList.findNode(9))
+print("Finding a specified node that does not exist:")
+print(myList.findNode(10))
+
+print('Now deleting node at index 6 (node containing 44) by running deleteAfter(5):')
+myList.deleteAfter(5)
+myList.printList()
+
+print("The LL will now delete the head, meaning 19 will no longer be the leading value")
+myList.deleteHead()
+myList.printList()
+
+print("Now tesing insertAfter function: 15 after 26")
+myList.insertAfter(26, 15)
+myList.printList()
+
+# Intercalate function stuff:
+print("Now intercalation:")
+print("The following sequence is list1:")
+list1 = MyList()
+list1.addTail(1)
+list1.addTail(3)
+list1.addTail(5)
+list1.addTail(8)
+list1.printList()
+print("The following sequence is list2:")
+list2 = MyList()
+list2.addTail(2)
+list2.addTail(6)
+list2.addTail(7)
+list2.printList()
+MyList.intercalate(list1, list2)
+print("intercalated list:")
+list1.printList()

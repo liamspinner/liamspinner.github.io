@@ -1,0 +1,40 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+# we are searching for int T in arr A which ranges from index L to index R
+
+def binarySearch(A, L, R, T):
+    # Step 1 is completed in the arguments; set L to 0 & R to n-1
+    while L <= R:
+        # Step 2 is the base case:
+        if L > R:
+            # T was not found; returning -1
+            return -1
+        # Step 3 is below, where the midpoint is found
+        midpoint = L + (R-L) //2
+        # Step 4: if the midpoint is greater than target, L = midp+1 and return to step 2
+        if A[midpoint] < T:
+            L = midpoint + 1
+        # Step 5: if midpoint = T, search is done
+        elif A[midpoint] == T:
+            return midpoint
+        else: 
+            R = midpoint - 1
+    
+
+
+
+
+# #  Main program 
+
+# A = [2, 3, 4, 10, 40]
+# T = 10
+
+# # Function call
+# result = binarySearch(A, 0, len(A)-1, T)
+
+# if result != -1:
+#     print("Element is present at index", result)
+# else:
+#     print("Element is not present in array")
+
+
+
