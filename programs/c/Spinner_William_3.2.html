@@ -1,0 +1,83 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+// William Spinner -- COP3223 Fall 2024
+// Assignment 3.1  -- 16 Nov 2024
+
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+struct Student {
+    // struct attributes
+    char firstname[20];
+    char lastname[20];
+    int id;
+    char grade;
+};
+
+int main() {
+    // making entries to an array of struct
+    struct Student students[17] = {
+        {"John", "Johnson", 895645, 'A'},
+        {"Jake", "Michaelson", 236598, 'A'},
+        {"Sally", "Weber", 225584, 'C'},
+        {"Tou", "Xiong", 364875, 'B'},
+        {"Jacquelyn", "Jackson", 984587, 'D'},
+        {"John", "White", 560258, 'C'},
+        {"Jake", "Johnson", 903258, 'B'},
+        {"Peter", "Parker", 358332, 'A'},
+        {"Kevin", "Jackson", 846152, 'D'},
+        {"Walter", "White", 30847, 'B'},
+        {"Jesse", "Pinkman", 100023, 'F'},
+        {"Gus", "Fring", 998293, 'B'},
+        {"Fitzroy", "Nembhard", 577344, 'C'},
+        {"Troy", "Nguyen", 123112, 'B'},
+        {"Ryan", "Stansifer", 999978, 'A'},
+        {"Rita", "Herschbach", 100032, 'F'},
+        {"Brian", "Wade", 399432, 'D'}
+    };
+    
+    // initializing and prompting the 2 variables used for search
+    int type;
+    char searchTerm[20];
+    
+    printf("0 = first name\n1 = last name\n2 = ID\n3 = grade\nenter search type: ");
+    scanf("%d", &type);
+    printf("enter search term: ");
+    scanf("%s", searchTerm);
+    
+    // get # of students by dividing total mem of students by size of each student
+    int studentQuant = sizeof(students) / sizeof(students[0]);
+    int resultQuant = 0;
+    
+    for (int i = 0; i < studentQuant; i++) {
+        // if user chose to search firstname and search is equal to a firstname:
+        if (type == 0 && !strcmp(students[i].firstname, searchTerm) ) {
+            printf("result: %-10s %-10s %-7d %c\n", students[i].firstname, students[i].lastname, students[i].id, students[i].grade);
+            // increment result counter
+            resultQuant++;
+        }
+        // same process but for lastname
+        if (type == 1 && !strcmp(students[i].lastname, searchTerm) ) {
+            printf("result: %-10s %-10s %-7d %c\n", students[i].firstname, students[i].lastname, students[i].id, students[i].grade);
+            // increment result counter
+            resultQuant++;
+        }
+        // if searching by ID number
+        if (type == 2 && students[i].id == atoi(searchTerm)) {
+            printf("result: %-10s %-10s %-7d %c\n", students[i].firstname, students[i].lastname, students[i].id, students[i].grade);
+            // increment result counter
+            resultQuant++;
+        }
+        // if searching by grade char
+        if (type == 3 && students[i].grade == searchTerm[0]) {
+            printf("result: %-10s %-10s %-7d %c\n", students[i].firstname, students[i].lastname, students[i].id, students[i].grade);
+            // increment result counter
+            resultQuant++;
+        }
+    }
+    puts("---------------------------------------");
+    printf("%d results found\n", resultQuant);
+
+    return 0;
+}

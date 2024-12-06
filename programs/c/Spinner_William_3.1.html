@@ -1,0 +1,125 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+// William Spinner -- COP3223 Fall 2024
+// Assignment 3.1  -- 17 Nov 2024
+
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+void expandArray(char ***array, int *size);
+void printList(char **array, int count);
+int findName(char **array, int count, const char *name);
+void removeName(char ***array, int *count, const char *name);
+
+void main() {
+    // starting size
+    int size = 2;
+    // char pointer to pointer to allocated memory 
+    char ** array = (char**)malloc(size * sizeof(char*));
+    // number of names entered
+    int nameQuant = 0;
+    // array ot store input
+    char userIn[20];
+    
+    // take input of names
+    printf("enter names ('done' to finish): \n");
+    while(true) {
+        printf("enter name: ");
+        scanf("%s", userIn);
+        // stop when "done"
+        if (strcmp(userIn, "done") == 0) {
+            break;
+        }
+        // if array becomes full then expandArray
+        if (nameQuant == size) {
+            expandArray(&array, &size);
+        }
+        // malloc for input name to array 
+        array[nameQuant] = (char*)malloc((strlen(userIn) + 1) * sizeof(char));
+        // copy input array to array with all names
+        strcpy(array[nameQuant], userIn);
+        // increment counter
+        nameQuant++;
+    }
+
+    printf("list has %d names:\n", nameQuant);
+    printList(array, nameQuant);
+
+    printf("enter the name to search for: ");
+    scanf("%s", userIn);
+    int index = findName(array, nameQuant, userIn);
+
+    // return index with short-if
+    (index == -1) ? printf("name not found\n") : printf("name found at index %d\n", index);
+
+    // prompt remove
+    printf("enter name to remove: ");
+    scanf("%s", userIn);
+    removeName(&array, &nameQuant, userIn);
+
+    printf("list has %d names: \n");
+    printList(array, nameQuant);
+
+    // for element in array, free element
+    for (int i = 0; i < nameQuant; i++) {
+        free(array[i]);
+    }
+    // free array
+    free(array);
+
+    return;
+}
+
+
+
+void expandArray(char ***array, int *size) {
+    // double pointer to size 
+    *size *= 2;
+    // reallocate memory to a larger segment of size
+    char **newArray = (char **)realloc(*array, (*size) * sizeof(char *));
+    // if array was already empty meaning 2*0 = 0
+    if (!newArray) {
+        exit(1); // 1 meaning something unexpected happened
+    }
+    // reassign pointer
+    *array = newArray;
+}
+
+void printList(char ** array, int nameQuant) {
+    // for each name, print name
+    for (int i = 0; i < nameQuant; i++) {
+        printf("%s\n", array[i]);
+    }
+}
+
+// only works to find the first instance of a name
+int findName(char **array, int nameQuant, const char *name) {
+    // for every name
+    for (int i = 0; i < nameQuant; i++) {
+        // check if equal to searched name
+        if (strcmp(array[i], name) == 0) {
+            return i;
+        }
+    }
+    // if not found return unreachable number
+    return -1;
+}
+
+void removeName(char * **array, int *nameQuant, const char *name) {
+    // find first occurence of target
+    int index = findName(*array, *nameQuant, name);
+    if (index == -1) {
+        printf("name not found\n");
+        return;
+    }
+    // free memory of target
+    free((*array)[index]);
+    // shift all names after target to close the gap
+    for (int i = index; i < *nameQuant - 1; i++) {
+        (*array)[i] = (*array)[i+1];
+    }
+    // increment quantity down one through pointer
+    (*nameQuant)--;
+}

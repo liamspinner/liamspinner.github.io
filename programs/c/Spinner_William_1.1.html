@@ -1,0 +1,46 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+/************************
+ *  Cop3223C Fall 2024  *
+ *  Assignment 1.1      *
+ *  William Spinner     *
+ *  wi642825@ucf.edu    *
+ ************************/
+
+// determine gross pay using hourly rate, overtime 1.5*hourly, and
+// 	# of hours worked
+#define _CRT_SECURE_NO_WARNINGS
+//necessary for standard input output stream
+#include <stdio.h>
+//stdlib contains exit() which is used when hours = -1
+#include <stdlib.h>
+
+// although c is not an OOP language, 'main' is still used to indicate the start of the program
+// also will be using return type float so that 'pay' can be returned
+int main() {
+	int hours; //hours must be initialized prior to being used
+	float wage, pay; //can initialize both variables in one line
+	// here a while loop will be used so that the program continually repeats until exit condition met
+	while(hours != -1) {
+		printf("Enter # of hours worked (-1 to end): ");
+		scanf("%d", &hours); // scanner is used to collect input
+		// exit if hours = -1
+		if (hours == -1) {
+			//without this exit statement, an attempted exit will finish the current salary calculation instead of quitting immediately
+			exit(0);
+		}
+		printf("Enter hourly rate of the worker ($00.00): ");
+		scanf("%f", &wage);
+		// checking if there are OT hours 
+		if (hours > 40) {
+			// this equation can tell gross pay with OT
+			pay = (hours*wage)+(hours-40)*(wage*1.5);
+		}
+		// if there aren't OT hours
+		else {
+			pay = hours*wage;
+		}
+		// the %.2f indicates that there should only be 2 decimal digits
+		printf("Salary is: $%.2f\n\n", pay);
+	}
+	return 0;
+}

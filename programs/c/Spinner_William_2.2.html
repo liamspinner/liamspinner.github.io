@@ -1,0 +1,41 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+/************************
+ *  Cop3223C Fall 2024  *
+ *  Assignment 2.2      *
+ *  William Spinner     *
+ *  wi642825@ucf.edu    *
+ *  11 Oct 2024         *
+ ************************/
+
+// find greatest common divisor
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+
+int gcd(int div1, int div2) {
+    // if divisor 2 is 0, then return first divisor
+    if (div2 == 0) {
+        return div1;
+    }
+    else { //recursive step
+        return gcd(div2, div1 % div2);
+    }
+}
+
+void main(){
+    int num1, num2;
+    // prompting user for numbers
+    printf("Please input the first number: ");
+    scanf("%d", &num1);
+    printf("Please input the second number: ");
+    scanf("%d", &num2);
+    // finding gcd
+    int common = gcd(num1, num2);
+    // displaying gcd
+    printf("%d", common);
+
+
+    return;
+}

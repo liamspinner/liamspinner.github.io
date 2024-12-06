@@ -1,0 +1,45 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+/************************
+ *  Cop3223C Fall 2024  *
+ *  Assignment 1.2      *
+ *  William Spinner     *
+ *  wi642825@ucf.edu    *
+ *	5 Sep 2024			*
+ ************************/
+
+// check if a 5 digit number is a palindrome
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdbool.h> // for boolean
+
+bool palindrome(int num) {
+	int flipped = 0; //this is where we will add digits as the number is reversed
+	int original = num; // will be used later to verify if palindrome
+	while (num > 0) {
+		// if we mod num repeatedly, we can get current digit at any point in time
+		int digit = num % 10;
+		// now add this new digit to the end of 'flipped'
+		flipped = (flipped * 10) + digit;
+		num = num / 10;
+	}
+	// using boolean to tell if the given int is palindrome 
+	if (original == flipped){
+		return true;
+	}
+	return false;
+}
+
+void main() {
+	// next 3 lines are taking input
+	printf("Enter a 5 digit integer: ");
+	int num;
+	scanf("%d", &num);
+	// here we will use the return type from palindrome()
+	if (palindrome(num) == true) {
+		printf("True: %d is a palindrome \n", num);
+	}
+	else {
+		printf("False: %d is not a palindrome \n", num);
+	}
+	return;
+}

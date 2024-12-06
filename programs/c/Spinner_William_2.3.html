@@ -1,0 +1,107 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+/************************
+ *  Cop3223C Fall 2024  *
+ *  Assignment 2.3      *
+ *  William Spinner     *
+ *  wi642825@ucf.edu    *
+ *  20 Oct 2024         *
+ ************************/
+
+// airline ticket system
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+ 
+#define totalSeats 6
+#define fcSeats 3
+#define eseats 3
+
+// function for if any seat is in first class or econ
+void printBoardingPass(int seat, int isFirstClass) {
+    if (isFirstClass) {
+        printf("Your seat is assigned to first class seat %d\n", seat + 1);
+    } else {
+        printf("Your seat is assigned to economy seat %d\n", seat + 1);
+    }
+}
+
+int main() {
+    int seats[totalSeats] = {0}; // 0 means empty & 1 means occupied
+    int seatAssigned = 0;
+    int choice, response;
+    int boarded = 0;
+
+    while (!boarded) {
+        printf("Please type 1 for \"first class\"\n");
+        printf("Please type 2 for \"economy\"\n");
+        scanf("%d", &choice);
+
+        if (choice == 1) { // if first class flyer
+            int seatFound = 0;
+            for (int i = 0; i < fcSeats; i++) {
+                if (seats[i] == 0) { // empty seat
+                    seats[i] = 1;
+                    printBoardingPass(i, 1);
+                    seatFound = 1;
+                    break;
+                }
+            }
+            if (!seatFound) {
+                printf("No seat available in first class, do you want a seat in economy? (1 for Yes, 0 for No): ");
+                scanf("%d", &response);
+                if (response == 1) {
+                    seatFound = 0;
+                    for (int i = fcSeats; i <totalSeats; i++) {
+                        if (seats[i] == 0) { // if theres an empty seat in econ
+                            seats[i] = 1;
+                            printBoardingPass(i, 0);
+                            seatFound = 1;
+                            break;
+                        }
+                    }
+                    if (!seatFound) {
+                        printf("Next flight leaves in 3 hours\n");
+                    }
+                } else {
+                    printf("Next flight leaves in 3 hours\n");
+                }
+            }
+        } else if (choice == 2) { // add to economy class
+            int seatFound = 0;
+            for (int i = fcSeats; i < totalSeats; i++) {
+                if (seats[i] == 0) { // if empty seat found in economy
+                    seats[i] = 1;
+                    printBoardingPass(i, 0);
+                    seatFound = 1;
+                    break;
+                }
+            }
+            if (!seatFound) {
+                printf("No seat available in economy, do you want a seat in first class? (1 for Yes, 0 for No): ");
+                scanf("%d", &response);
+                if (response == 1) {
+                    seatFound = 0;
+                    for (int i = 0; i < fcSeats; i++) {
+                        if (seats[i] == 0) { // if theres an empty seat in econ
+                            seats[i] = 1;
+                            printBoardingPass(i, 1);
+                            seatFound = 1;
+                            break;
+                        }
+                    }
+                    if (!seatFound) {
+                        printf("Next flight leaves in 3 hours\n");
+                    }
+                } else {
+                    printf("Next flight leaves in 3 hours\n");
+                }
+            }
+        } else {
+            printf("Invalid choice. Please try again\n");
+        }
+
+        printf("Has everyone boarded? (1 for Yes, 0 for No): ");
+        scanf("%d", &boarded);
+    }
+
+    return 0;
+}

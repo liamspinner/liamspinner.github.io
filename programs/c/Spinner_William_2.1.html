@@ -1,0 +1,87 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+/************************
+ *  Cop3223C Fall 2024  *
+ *  Assignment 2.1      *
+ *  William Spinner     *
+ *  wi642825@ucf.edu    *
+ *  30 Sep 2024         *
+ ************************/
+
+// number guessing game w/ 3 difficulties and 8 guess attempts
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// random_number_gen function here
+int random_number_gen(int maxNum){
+    int randNum;
+    srand(time(NULL)); // seed
+    randNum = rand() % maxNum + 1;
+}
+
+void main() {
+    int difficulty, maxNum, randNum;
+    int replay = 1;
+
+    // using a do while until replay = 0
+    do {
+        printf("Lets play guess the number\n");
+        printf("Pick a difficulty (1, 2, 3): ");
+        scanf("%d", &difficulty);
+
+        // because there are only three choices, we can use a switch statement
+        // because the choices here are also 1:1
+        switch (difficulty) {
+            case 1:
+                maxNum = 10;
+                break;
+            case 2:
+                maxNum = 100;
+                break;
+            case 3:
+                maxNum = 1000;
+                break;
+            default:
+                printf("Invalid difficulty\n ");
+                break;
+        }
+        // now make random number based on difficulty
+        randNum = random_number_gen(maxNum);
+        // print for verification
+        // printf("%d\n", randNum);
+        // logs how many guesses player had made
+        int tryNum = 0;
+
+        printf("The number has been chosen. What's your guess? ");
+
+        int guess;
+        // while true:
+        // check if 8 tries
+        // if not, then take and evaluate a guess
+        while (0 == 0) {
+            scanf("%d", &guess);
+            // increment attempt number
+            tryNum++;
+            // before 
+            if (tryNum == 8) {
+                puts("Better luck next time");
+                break;
+            }
+
+            if (guess < randNum){
+                printf("Too low. Guess again: ");
+            } else if (guess > randNum) {
+                printf("Too high. Guess again: ");
+            } else {
+                printf("You got it in %d guesses!", tryNum);
+                break;
+            }
+        }
+        // restart the game or not
+        printf("\nPlay again? 1 for yes, 0 for no: ");
+        scanf("%d", &replay);
+    } while(replay == 1);
+
+    return;
+}

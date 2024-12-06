@@ -1,0 +1,53 @@
+<link href="txtstyle.css" rel="stylesheet" type="text/css" />
+/************************
+ *  Cop3223C Fall 2024  *
+ *  Assignment 1.3      *
+ *  William Spinner     *
+ *  wi642825@ucf.edu    *
+ *  6 Sep 2024          *
+ ************************/
+
+// create a diamond shape using '*' given an odd number of rows
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+void main() {
+	// next 3 lines are taking input
+    int rows = 0;
+    while (rows % 2 != 1) {
+	printf("Enter odd # of rows: ");
+	//int rows, i;
+	scanf("%d", &rows);
+    }
+    // it should be observed that a diamond of n rows' center row contains n '*'s 
+    for (int i = 0; i < rows+1; i++){
+        // numbering for dev use
+        // printf("%d", i);
+        printf("\n");
+        // we must eval to rows-i so that the offset is not a constant
+        for (int j =0; j < rows-i; j++){
+            printf(" ");
+        }
+        // print appropriate # of asterisks
+        // must evaluate rows+1 or else the center line will be missing a star
+        for (int b = 1; b < i+1; b++) { 
+            printf("* ");
+        }
+    }
+    // now a second set of for loops for the bottom half
+    // big for loops conditions should be inversed including +- signs
+    for (int i = rows-1; i >= 1; i--){
+        printf("\n");
+        // increase by one every row
+        for (int k = 0; k <= rows-i-1; k++){ //rows-i
+            printf(" ");
+        }
+        // print appropriate amt asterisks for current row
+        // decrease by on every row
+        for (int v = 1; v <= i; v++) { // v <= i - 1
+            printf("* ");
+        }
+    }
+    printf("\n");
+    return;
+}
